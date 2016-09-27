@@ -2,6 +2,14 @@ class PostsController < ApplicationController
   def index
     @welcome_msg = "Hola Amigo!"
     @posts = PostsController.allposts
+    render :layout => 'otherlayout'
+  end
+
+  def create
+    @params = params
+    @title = params["title"]
+    @author = params["author"]
+    @body = params["body"]
   end
 
   def show
@@ -14,10 +22,15 @@ class PostsController < ApplicationController
         @mypost = post
       end
     end
+    if @mypost == nil
+          render :file => 'public/404.html',
+              :status => :not_found
+    end
 
   end
 
   def new
+
   end
 
   def edit
@@ -44,6 +57,10 @@ class PostsController < ApplicationController
     ]
   end
 
+  private
+  def post_params
+    params.require(:post).permit(:title, :author, :body)
+  end
 
 
 
