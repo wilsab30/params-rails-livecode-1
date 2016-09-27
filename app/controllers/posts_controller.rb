@@ -34,9 +34,41 @@ class PostsController < ApplicationController
   end
 
   def edit
+    @posts = PostsController.allposts
+    @mypost = nil
+
+    @posts.each do |post|
+      number = params[:id].to_i
+      if post[:id] == number
+        @mypost = post
+      end
+    end
+    if @mypost == nil
+          render :file => 'public/404.html',
+              :status => :not_found
+    end
+
   end
 
   def update
+    @posts = PostsController.allposts
+    @mypost = nil
+
+    @posts.each do |post|
+      number = params[:id].to_i
+      if post[:id] == number
+        @mypost = post
+      end
+    end
+    if @mypost == nil
+          render :file => 'public/404.html',
+              :status => :not_found
+    end
+
+    @mypost[:title] = params["title"]
+    @mypost[:author] = params["author"]
+    @mypost[:body]  = params["body"]
+
   end
 
   def destroy
