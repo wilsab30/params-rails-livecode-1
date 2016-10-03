@@ -5,7 +5,7 @@ class PostsController < ApplicationController
   end
 
   def index
-    @posts = Post.all
+    @posts = Post.all.reverse
   end
 
   def create
@@ -24,10 +24,16 @@ class PostsController < ApplicationController
 
   def new
     @mypost = Post.new
+    @post_creation_method = "post"
+    @post_method = :post
+    @post_path = posts_create_path
   end
 
   def edit
     @mypost = findPost
+    @post_creation_method = "post"
+    @post_method = :put
+    @post_path = posts_update_path(@mypost.id)
     if @mypost == nil
           render :file => 'public/404.html',
               :status => :not_found
@@ -37,14 +43,15 @@ class PostsController < ApplicationController
 
   def update
     @mypost = findPost
+
     if @mypost == nil
           render :file => 'public/404.html',
               :status => :not_found
     end
 
-    @mypost.title = params["title"]
-    @mypost.author = params["author"]
-    @mypost.body  = params["body"]
+    @mypost.title = params[:post]["title"]
+    @mypost.author = params[:post]["author"]
+    @mypost.body  = params[:post]["body"]
     @mypost.save
     redirect_to root_path
   end

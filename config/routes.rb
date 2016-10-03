@@ -16,7 +16,7 @@ Rails.application.routes.draw do
 
   get 'posts/:id/edit' => 'posts#edit', as: 'edit'
 
-  put 'posts/:id/update' => 'posts#update'
+  put 'posts/:id/update' => 'posts#update', as: 'posts_update'
 
   delete 'posts/:id/destroy' => 'posts#destroy', as: 'delete'
 
