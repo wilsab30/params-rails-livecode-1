@@ -2,9 +2,9 @@
 <% @posts.each do |post| %>
   <article>
     <h2>
-      <%= link_to( post[:title], show_path(post[:id]) ) %>
+      <%= link_to( post.title, show_path(post.id) ) %>
     </h2>
-    <h3> By:  <%= post[:author] %> </h3>
-    <p> <%= post[:body] %> </p>
+    <h3> By:  <%= post.author %> </h3>
+    <p> <%= post.body %> </p>
   </article>
 <% end %>

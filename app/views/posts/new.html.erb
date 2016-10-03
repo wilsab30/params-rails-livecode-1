@@ -1,7 +1,21 @@
 <h1>Create a Blog Post</h1>
 
-<form name="post" action="create" method="post">
-  
+<%= form_for @mypost, 
+    url: create_path do |f| %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+
+  <%= f.label :author %>
+  <%= f.text_field :author %>
+
+  <%= f.label :body %>
+  <%= f.text_area :body %>
+
+  <%= f.submit %>
+<% end %>
+
+<!-- <form name="post" action="create" method="post">
+
   <label for="title">Title:</label>
   <input type="text" name="title" id="title">
 
@@ -15,4 +29,4 @@
     :name => request_forgery_protection_token.to_s,
     :value => form_authenticity_token) %>
   <button type="submit">Submit</button>
-</form>
+</form> -->

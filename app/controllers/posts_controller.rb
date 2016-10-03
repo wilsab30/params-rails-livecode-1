@@ -1,48 +1,33 @@
 class PostsController < ApplicationController
+
+  def findPost
+    return Post.find(params[:id].to_i)
+  end
+
   def index
-    @welcome_msg = "Hola Amigo!"
-    @posts = PostsController.allposts
-    render :layout => 'otherlayout'
+    @posts = Post.all
   end
 
   def create
     @params = params
-    @title = params["title"]
-    @author = params["author"]
-    @body = params["body"]
+    @mypost = Post.new
+    @mypost.title = params[:post][:title]
+    @mypost.author = params[:post][:author]
+    @mypost.body = params[:post][:body]
+    @mypost.save
+    redirect_to root_path
   end
 
   def show
-    @posts = PostsController.allposts
-    @mypost = nil
-
-    @posts.each do |post|
-      number = params[:id].to_i
-      if post[:id] == number
-        @mypost = post
-      end
-    end
-    if @mypost == nil
-          render :file => 'public/404.html',
-              :status => :not_found
-    end
-
+    @mypost = findPost
   end
 
   def new
-
+    @mypost = Post.new
   end
 
   def edit
-    @posts = PostsController.allposts
-    @mypost = nil
-
-    @posts.each do |post|
-      number = params[:id].to_i
-      if post[:id] == number
-        @mypost = post
-      end
-    end
+    @mypost = findPost
     if @mypost == nil
           render :file => 'public/404.html',
               :status => :not_found
@@ -51,27 +36,25 @@ class PostsController < ApplicationController
   end
 
   def update
-    @posts = PostsController.allposts
-    @mypost = nil
-
-    @posts.each do |post|
-      number = params[:id].to_i
-      if post[:id] == number
-        @mypost = post
-      end
-    end
+    @mypost = findPost
     if @mypost == nil
           render :file => 'public/404.html',
               :status => :not_found
     end
 
-    @mypost[:title] = params["title"]
-    @mypost[:author] = params["author"]
-    @mypost[:body]  = params["body"]
-
+    @mypost.title = params["title"]
+    @mypost.author = params["author"]
+    @mypost.body  = params["body"]
+    @mypost.save
+    redirect_to root_path
   end
 
   def destroy
+    @mypost = findPost
+    if @mypost != nil
+      @mypost.destroy
+      redirect_to root_path
+    end
   end
 
   def self.allposts
@@ -93,7 +76,4 @@ class PostsController < ApplicationController
   def post_params
     params.require(:post).permit(:title, :author, :body)
   end
-
-
-
 end

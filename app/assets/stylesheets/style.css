@@ -1,2 +1,9 @@
 
 h1 { color: red;}
+nav ul li a {
+  display: inline;
+}
+
+.blog-header a {
+  text-decoration: none;
+}
